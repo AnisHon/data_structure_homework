@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 3.26)
+project(CPPproject01)
+
+set(CMAKE_CXX_STANDARD 17)
+
+add_executable(CPPproject01 main.cpp
+        avl_tree.hpp)
