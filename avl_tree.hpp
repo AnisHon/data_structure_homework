@@ -33,7 +33,7 @@ private:
      * @param element[in] element of new node
      * @return new node
      */
-    static TreeNode *create_treeNode(T element) {
+    static auto create_treeNode(T element) -> TreeNode * {
         return new TreeNode(element);
     }
 
@@ -42,11 +42,11 @@ private:
      * @param treeNode[in] a node
      * @return height
      */
-    static int get_height(TreeNode *treeNode) {
+    static auto get_height(TreeNode *treeNode) -> int {
         return treeNode == nullptr ? 0 : treeNode->height;
     }
 
-    static int max_height(TreeNode *node1, TreeNode *node2) {
+    static auto max_height(TreeNode *node1, TreeNode *node2) -> int {
         return std::max(get_height(node1), get_height(node2));
     }
 
@@ -56,7 +56,7 @@ private:
      * @param node2[in] the second tree
      * @return the difference
      */
-    static int height_difference(TreeNode *node1, TreeNode *node2) {
+    static auto height_difference(TreeNode *node1, TreeNode *node2) -> int {
         return get_height(node1) - get_height(node2);
     }
 
@@ -65,8 +65,10 @@ private:
      * @param treeNode[in] treeNode.
      * @return max subtree node;
      */
-    static TreeNode *max_node(TreeNode *treeNode) {
-        if (treeNode == nullptr) return nullptr;
+    static auto max_node(TreeNode *treeNode) -> TreeNode * {
+        if (treeNode == nullptr) { return
+            nullptr;
+}
         TreeNode *temp = treeNode;
         while (temp->right) {
             temp = temp->right;
@@ -79,7 +81,7 @@ private:
      * @param treeNode[in] the min imbalanced subtree.
      * @return new root node.
      */
-    static TreeNode *left_rotation(TreeNode *treeNode) {
+    static auto left_rotation(TreeNode *treeNode) -> TreeNode * {
         TreeNode *right_node = treeNode->right;
         treeNode->right = right_node->left;
         right_node->left = treeNode;
@@ -94,7 +96,7 @@ private:
      * @param treeNode[in] the min imbalanced subtree.
      * @return new root node
      */
-    static TreeNode *right_rotation(TreeNode *treeNode) {
+    static auto right_rotation(TreeNode *treeNode) -> TreeNode * {
         TreeNode *left_node = treeNode->right;
         treeNode->left = left_node->right;
         left_node->right = treeNode;
@@ -109,7 +111,7 @@ private:
      * @param treeNode[in] the min imbalanced subtree
      * @return new root node
      */
-    static TreeNode *left_right_rotation(TreeNode *treeNode) {
+    static auto left_right_rotation(TreeNode *treeNode) -> TreeNode * {
         treeNode->left = left_rotation(treeNode->left);
         return right_rotation(treeNode);
     }
@@ -119,7 +121,7 @@ private:
      * @param treeNode[in] the min imbalanced subtree
      * @return new root node
      */
-    static TreeNode *right_left_rotation(TreeNode *treeNode) {
+    static auto right_left_rotation(TreeNode *treeNode) -> TreeNode * {
         treeNode->right = right_rotation(treeNode->right);
         return left_rotation(treeNode);
     }
@@ -129,9 +131,11 @@ private:
      * @param treeNode[in] check and balance the tree
      * @return new or origin root
      */
-    static TreeNode *balance(TreeNode *treeNode) {
+    static auto balance(TreeNode *treeNode) -> TreeNode * {
         auto difference = height_difference(treeNode->left, treeNode->right);
-        if (treeNode == nullptr || ::abs(difference) <= 1) return treeNode;
+        if (treeNode == nullptr || ::abs(difference) <= 1) {
+            return treeNode;
+}
 
         int left_height = 0;
         int right_height = 0;
@@ -166,7 +170,7 @@ private:
      * @param element element to be added
      * @return original or new root
      */
-    static TreeNode *add_node(TreeNode *treeNode, T element) {
+    static auto add_node(TreeNode *treeNode, T element) -> TreeNode * {
         if (treeNode == nullptr) {
             return create_treeNode(element);
         }
@@ -186,23 +190,25 @@ private:
 
 
     static void dlr_print_impl(TreeNode *treeNode) {
-        if (treeNode == nullptr) return;
+        if (treeNode == nullptr) {
+            return;
+        }
         std::cout << treeNode->element << " ";
         dlr_print_impl(treeNode->left);
         dlr_print_impl(treeNode->right);
     }
 
 public:
-    explicit AvlTree(T element) {
-        root_ = create_treeNode(element);
+    explicit AvlTree(T element) : root_(create_treeNode(element)) {
+
     }
 
-    void dlr_print() {
+    void dlr_print() const {
         dlr_print_impl(root_);
         std::cout << "\n";
     }
 
-    TreeNode *find(T element) {
+    auto find(T element) -> TreeNode * {
         TreeNode *temp = root_;
         while (temp) {
             if (element < temp->element) {

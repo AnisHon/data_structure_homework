@@ -3,7 +3,7 @@
 
 
 
-int main() {
+auto main() -> int {
 
     AvlTree<char> tree('A');
     for (char c = 'B'; c <= 'Z'; c++) {
