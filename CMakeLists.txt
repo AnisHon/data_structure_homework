@@ -4,4 +4,6 @@ project(CPPproject01)
 set(CMAKE_CXX_STANDARD 17)
 
 add_executable(CPPproject01 main.cpp
-        avl_tree.hpp)
+        avl_tree.hpp
+        basic_algorithm.cpp
+)

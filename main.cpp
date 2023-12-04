@@ -1,15 +1,12 @@
 #include <iostream>
 #include "avl_tree.hpp"
-
+#include "basic_algorithm.cpp"
 
 
 auto main() -> int {
 
-    AvlTree<char> tree('A');
-    for (char c = 'B'; c <= 'Z'; c++) {
-        tree.insert(c);
-    }
-    tree.dlr_print();
+
+    std::cout << basic_algrithm::qpow_recursive(2, 10);
 
 
     return 0;
