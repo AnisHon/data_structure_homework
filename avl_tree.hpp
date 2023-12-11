@@ -86,8 +86,8 @@ private:
         treeNode->right = right_node->left;
         right_node->left = treeNode;
 
-        treeNode->height = max_height(treeNode->left, treeNode->right);
-        right_node->height = max_height(right_node->left, right_node->right);
+        treeNode->height = max_height(treeNode->left, treeNode->right) + 1;
+        right_node->height = max_height(right_node->left, right_node->right) + 1;
         return right_node;
     }
 
@@ -101,8 +101,8 @@ private:
         treeNode->left = left_node->right;
         left_node->right = treeNode;
 
-        treeNode->height = max_height(treeNode->left, treeNode->right);
-        left_node->height = max_height(left_node->left, left_node->right);
+        treeNode->height = max_height(treeNode->left, treeNode->right) + 1;
+        left_node->height = max_height(left_node->left, left_node->right) + 1;
         return left_node;
     }
 
@@ -160,6 +160,7 @@ private:
             }
         }
 
+        treeNode->height = max_height(treeNode->left, treeNode->right) + 1;
 
         return treeNode;
     }
@@ -184,10 +185,32 @@ private:
         return balance(treeNode);
     }
 
+    static auto delete_node(TreeNode *treeNode, T element) -> TreeNode * {
+        if (treeNode == nullptr) {
+            return nullptr;
+        }
+        if (element < treeNode->element) {
+            treeNode->left = delete_node(treeNode->left, element);
+        } else if (element > treeNode->element) {
+            treeNode->right = delete_node(treeNode->right, element);
+        } else {
+            if (treeNode->right != nullptr && treeNode->left != nullptr) {
+                auto temp = max_node(treeNode->left);
+                treeNode->element = temp->element;
+                treeNode->left = delete_node(treeNode->left, element);
+            } else {
+                auto temp = treeNode;
+                if (treeNode->right == nullptr) {
+                    treeNode = treeNode->left;
+                } else {
+                    treeNode = treeNode->right;
+                }
+                delete temp;
+            }
 
-
-    
-
+        }
+        return treeNode;
+    }
 
     static void dlr_print_impl(TreeNode *treeNode) {
         if (treeNode == nullptr) {
@@ -200,7 +223,6 @@ private:
 
 public:
     explicit AvlTree(T element) : root_(create_treeNode(element)) {
-
     }
 
     void dlr_print() const {

@@ -19,6 +19,13 @@ namespace basic_algorithm {
         }
     }
 
+
+
+
+
+
+
+
     long long qpow(int num, int index) {
         long long result = 1;
 
