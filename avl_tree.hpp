@@ -5,7 +5,7 @@
 #include <cmath>
 #include <iostream>
 #include <algorithm>
-
+#include <initializer_list>
 /**
  * AvlTree maintained some basic function of balanced binary tree.
  * @tparam T the value you want to store.
@@ -97,7 +97,7 @@ private:
      * @return new root node
      */
     static auto right_rotation(TreeNode *treeNode) -> TreeNode * {
-        TreeNode *left_node = treeNode->right;
+        TreeNode *left_node = treeNode->left;
         treeNode->left = left_node->right;
         left_node->right = treeNode;
 
@@ -132,8 +132,9 @@ private:
      * @return new or origin root
      */
     static auto balance(TreeNode *treeNode) -> TreeNode * {
+        if (treeNode == nullptr) return treeNode;
         auto difference = height_difference(treeNode->left, treeNode->right);
-        if (treeNode == nullptr || ::abs(difference) <= 1) {
+        if (::abs(difference) <= 1) {
             return treeNode;
 }
 
@@ -197,7 +198,7 @@ private:
             if (treeNode->right != nullptr && treeNode->left != nullptr) {
                 auto temp = max_node(treeNode->left);
                 treeNode->element = temp->element;
-                treeNode->left = delete_node(treeNode->left, element);
+                treeNode->left = delete_node(treeNode->left, temp->element);
             } else {
                 auto temp = treeNode;
                 if (treeNode->right == nullptr) {
@@ -207,9 +208,9 @@ private:
                 }
                 delete temp;
             }
-
         }
-        return treeNode;
+        if (treeNode != nullptr) treeNode->height = max_height(treeNode->left, treeNode->right) + 1;
+        return balance(treeNode);
     }
 
     static void dlr_print_impl(TreeNode *treeNode) {
@@ -246,6 +247,26 @@ public:
 
     void insert(T element) {
         root_ = add_node(root_, element);
+    }
+
+    void insert(std::initializer_list<T> list) {
+        for (auto element : list) {
+            root_ = add_node(root_, element);
+        }
+
+    }
+
+    bool insert_with_check(T element) {
+        if (find(element)) {
+            return false;
+        }
+        root_ = add_node(root_, element);
+        return true;
+    }
+
+
+    void erase(T element) {
+        root_ = delete_node(root_, element);
     }
 
 };
