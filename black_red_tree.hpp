@@ -46,7 +46,7 @@ namespace data_structure {
 
         void dlr(Node *root) {
             if (root == nullptr) return;
-            std::cout << root->element << " ";
+            std::cout << root->element << (root->color ? "B" : "R") << " ";
             dlr(root->right);
             dlr(root->left);
         }
@@ -60,6 +60,7 @@ namespace data_structure {
 
         void print_dlr() {
 
+            dlr(root_);
             std::cout << "\n";
         }
     };
