@@ -2,27 +2,17 @@
 #include <cstdlib>
 #include <algorithm>
 #include "avl_tree.hpp"
+#include "basic_algorithm.h"
+#include <string>
+#include "black_red_tree.hpp"
 
-
+using std::cout, std::string;
 
 int main() {
-
-    AvlTree<int> avlTree(0);
-    for (int i = 1; i < 10; ++i) {
-        //avlTree.dlr_print();
-        avlTree.insert(i);
+    data_structure::BlackRedTree<int> blackRedTree(0);
+    for (int i = 0; i < 10; ++i) {
+        blackRedTree.insert(i);
     }
-
-    avlTree.erase(1);
-    avlTree.insert(1);
-    avlTree.erase(7);
-    avlTree.erase(6);
-    avlTree.erase(5);
-
-    avlTree.insert({7, 6, 5});
-    avlTree.erase(3);
-    avlTree.erase(2);
-    avlTree.dlr_print();
-
+    blackRedTree.print_dlr();
     return 0;
 }

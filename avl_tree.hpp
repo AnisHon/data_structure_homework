@@ -68,7 +68,7 @@ private:
     static auto max_node(TreeNode *treeNode) -> TreeNode * {
         if (treeNode == nullptr) { return
             nullptr;
-}
+        }
         TreeNode *temp = treeNode;
         while (temp->right) {
             temp = temp->right;

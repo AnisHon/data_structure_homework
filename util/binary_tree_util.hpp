@@ -2,8 +2,8 @@
 // Created by happy on 2023/12/13.
 //
 
-#ifndef CPPPROJECT01_TREE_UTIL_HPP
-#define CPPPROJECT01_TREE_UTIL_HPP
+#ifndef CPPPROJECT01_BINARY_TREE_UTIL_HPP
+#define CPPPROJECT01_BINARY_TREE_UTIL_HPP
 
 namespace util {
     template <typename T>
@@ -34,6 +34,14 @@ namespace util {
         return left_rotation(root);
     }
 
+    template <typename T>
+    void dlr(T *root) {
+        if (root == nullptr) return;
+        std::cout << root->element << " ";
+        dlr(root->right);
+        dlr(root->left);
+    }
+
 }
 
-#endif //CPPPROJECT01_TREE_UTIL_HPP
+#endif //CPPPROJECT01_BINARY_TREE_UTIL_HPP

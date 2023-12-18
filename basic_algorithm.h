@@ -12,7 +12,7 @@ namespace basic_algorithm {
     using std::string;
     long long qpow_recursive(int num, int index);
     long long qpow(int num, int index);
-    string plus(const string num1, const string num2);
+    string multiply(string num1, string num2);
 
 }
 

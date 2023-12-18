@@ -40,7 +40,7 @@ namespace basic_algorithm {
         return result;
     }
 
-    string plus(string num1, string num2) {
+    string multiply(string num1, string num2) {
         std::reverse(num1.begin(), num1.end());
         std::reverse(num2.begin(), num2.end());
         auto size1 = num1.size();
