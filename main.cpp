@@ -10,9 +10,12 @@ using std::cout, std::string;
 
 int main() {
     data_structure::BlackRedTree<int> blackRedTree(0);
+    bool c;
     for (int i = 0; i < 10; ++i) {
-        blackRedTree.insert(i);
+         blackRedTree.insert(i);
     }
+
+
     blackRedTree.print_dlr();
     return 0;
 }
