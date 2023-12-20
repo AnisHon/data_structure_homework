@@ -60,7 +60,6 @@ namespace basic_algorithm {
             n[i] = num % 10;
             num /= 10;
         }
-
         auto p = size1 + size2 - 1;
         while (p && n[p--] == 0) n.pop_back();
         std::reverse(n.begin(), n.end());
