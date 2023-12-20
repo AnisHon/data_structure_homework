@@ -35,8 +35,8 @@ namespace data_structure {
         void dlr(Node *root) {
             if (root == nullptr) return;
             std::cout << root->element << (root->color ? "B" : "R") << " ";
-            dlr(root->right);
             dlr(root->left);
+            dlr(root->right);
         }
 
         bool get_color(Node *root) {
@@ -55,6 +55,7 @@ namespace data_structure {
         void right_rotation(Node *root) {
             if (root == nullptr) return;
 
+
             auto left = root->left;
             root->left = left->right;
             left->right = root;
@@ -62,8 +63,8 @@ namespace data_structure {
             left->parent = root->parent;
             root->parent = left;
             if (root->left != nullptr) root->left->parent = root;
-
             reconnect_parent(root, left, left->parent);
+            if (left->parent == nullptr) {root_ = left;}
 
         }
 
@@ -82,6 +83,7 @@ namespace data_structure {
             if (root->right != nullptr) root->right->parent = root;
 
             reconnect_parent(root, right, right->parent);
+            if (right->parent == nullptr) {root_ = right;}
         }
 
         bool get_pos(Node *root, Node *parent) {
@@ -91,13 +93,6 @@ namespace data_structure {
             return pos == L ? parent->left : parent->right;
         }
 
-        void left_right_rotation(Node *root) {
-            //todo
-        }
-
-        void right_left_rotation(Node *root) {
-            //todo
-        }
 
         void rotation_maintain(Node *grandparent, Node *parent, Node *root, bool root_pos, bool parent_pos) {
             if (parent_pos == L) {
@@ -106,6 +101,7 @@ namespace data_structure {
                     grandparent->color = RED;
                     right_rotation(grandparent);
                 } else {
+
                     //todo
                 }
             } else {
