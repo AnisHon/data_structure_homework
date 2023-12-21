@@ -143,6 +143,61 @@ namespace data_structure {
             }
         }
 
+        bool erase_(Node *root, T element) {
+            if (root == nullptr) return false;
+            auto parent = root->parent;
+            auto current = root;
+            auto max = root;
+
+            // find position. if exists, return false;
+            while (current != nullptr) {
+                if (current->element > element) {
+                    current = current->left;
+                } else if (current->element < element) {
+                    current = current->right;
+                } else {
+                    break;
+                }
+            }
+
+            if (current == nullptr) return false;
+            parent = current->parent;
+            auto brother = select_child(parent, !get_pos(current, parent));
+            if (current->left != nullptr && current->right != nullptr) { // leaf
+                max = find_max(current->left);
+                if (max != nullptr) current->element = max->element;
+                erase_(max, element);
+            } else {
+                if (current->left != nullptr) {
+                    auto left = current->left;
+                    current->element = left->element;
+                    current->left = nullptr;
+                    delete left;
+                } else if (current->right != nullptr){
+                    auto right = current->right;
+                    current->element = right->element;
+                    current->right = nullptr;
+                    delete right;
+                } else {
+                    if (current->color == RED) {
+                        (parent->left == current ? parent->left : parent->right) = nullptr;
+                        delete current;
+                    } else {
+                        auto l_nephew = get_color(brother->left);
+                        auto r_nephew = get_color(brother->right);
+                        if (brother->color == RED) {
+
+                        }
+
+
+                    }
+                }
+            }
+
+
+            return true;
+        }
+
     public:
         explicit BlackRedTree(T element) {
             root_ = create_node(element);
