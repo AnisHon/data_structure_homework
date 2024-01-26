@@ -1,21 +1,20 @@
 #include <iostream>
-#include <cstdlib>
-#include <algorithm>
-#include "avl_tree.hpp"
-#include "basic_algorithm.h"
-#include <string>
-#include "red_black_tree.hpp"
+#include "BinarySearchTree.h"
+#include "avl_tree.h"
+#include "binary_search_tree_map.h"
 
-using std::cout, std::string;
+using namespace std;
 
 int main() {
-    data_structure::BlackRedTree<int> blackRedTree(0);
-    bool c;
-    for (int i = 0; i < 10; ++i) {
-         blackRedTree.insert(i);
+
+    BinarySearchTreeMap<int, char> b;
+
+    int array[] = {3, 1, 7, 9, 5, 0, 6, 4, 2, 8};
+    for (auto &i : array) {
+        b.put(i, i + 'A');
     }
 
+    b.print_dlr();
 
-    blackRedTree.print_dlr();
     return 0;
 }

@@ -3,7 +3,8 @@
 //
 
 #include "basic_algorithm.h"
-
+#include <stack>
+#include <sstream>
 
 namespace basic_algorithm {
     long long qpow_recursive(int num, int index) {
@@ -20,8 +21,84 @@ namespace basic_algorithm {
     }
 
 
-
-
+//    class Symbol {
+//        enum Priority{
+//            LOW = 1, MEDIUM = 2, HIGH = 3
+//        };
+//        char symbol_;
+//        Priority priority_;
+//
+//    public:
+//        explicit Symbol(char symbol) {
+//            switch (symbol) {
+//                case '+':
+//                case '-':
+//                    priority_ = LOW;
+//                    break;
+//                case '*':
+//                case '/':
+//                    priority_ = MEDIUM;
+//                    break;
+//                case '(':
+//                    priority_ = HIGH;
+//            }
+//            symbol_ = symbol;
+//        }
+//
+//        bool operator<=(Symbol &other) const {
+//            return this->priority_ <= other.priority_;
+//        }
+//
+//        char get_symbol() const {
+//           return this->symbol_;
+//        }
+//
+//    };
+    
+//    int calculate(string &expression) {
+//        string suffix_expression;
+//        suffix_expression.reserve(expression.size());
+//        std::stack<int> result;
+//        std::stack<Symbol> symbol;
+//        for (const auto &item: expression) {
+//            if ('0' <= item && item <= '9') {
+//                suffix_expression.push_back(item);
+//            } else {
+//                Symbol temp(item);
+//                if (item == ' ') { continue; }
+//                if (item == ')') {
+//                    while (symbol.top().get_symbol() != '(') {
+//                        suffix_expression.push_back(' ');
+//                        suffix_expression.push_back(symbol.top().get_symbol());
+//                        symbol.pop();
+//                    }
+//                    symbol.pop();
+//                    continue;
+//                }
+//                if (!symbol.empty() || symbol.top() <= temp) {
+//                    symbol.push(temp);
+//                } else {
+//
+//                    while (!symbol.empty() && !(symbol.top() <= temp)) {
+//                        suffix_expression.push_back(symbol.top().get_symbol());
+//                        symbol.pop();
+//                    }
+//                    symbol.push(temp);
+//                }
+//            }
+//        }
+//        while (!symbol.empty()) {
+//            suffix_expression.push_back(symbol.top().get_symbol());
+//            symbol.pop();
+//        }
+//        std::istringstream istr(suffix_expression);
+//        string temp;
+//        while (istr >> temp) {
+//            if (temp == "+" || temp == "-" || temp == "*" || temp == "/")
+//        }
+//
+//
+//    }
 
 
 
