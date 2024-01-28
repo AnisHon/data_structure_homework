@@ -2,6 +2,9 @@ add_library(TreeLib BinaryTree.h BinarySearchTree.h test.cpp
         avl_tree.h
         binary_search_tree_map.h
         binary_tree_map.h
+        heap.h
+        max_priority_queue.h
+        br_tree.h
 )
 
 target_link_libraries(TreeLib compiler_flags)

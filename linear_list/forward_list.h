@@ -73,7 +73,7 @@ public:
             i--;
         }
 //        if (current == nullptr && i == 0) {
-//            prev->next = new Node();
+//            prev->next = new Element();
 //        }
         if (i == -1 && current == nullptr) {
             prev->next = new Node(t);

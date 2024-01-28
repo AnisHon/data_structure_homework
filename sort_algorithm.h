@@ -6,6 +6,7 @@
 #define CPPPROJECT01_SORT_ALGORITHM_H
 
 #include <algorithm>
+#include <iostream>
 
 namespace sort {
 
@@ -162,6 +163,37 @@ namespace sort {
     auto quick_sort(T t[], int n) -> void {
         if (n <= 1) return;
         quick_sort_(t, 0, n - 1);
+    }
+
+    template <typename T>
+    static auto heap_sink(T *heap, int n, int beg = 1) {
+        int index = beg;
+        int max = 0;
+        while (2 * index < n) {
+            if (2 * index + 1 > n + 1) {
+                max = index * 2;
+            } else {
+                heap[2 * index] > heap[2 * index + 1] ? max = index * 2 : max = 2 * index + 1;
+            }
+            if (heap[max] > heap[index]) {
+                std::swap(heap[max], heap[index]);
+            }
+            index = max;
+        }
+    }
+
+    template <typename T>
+    auto heap_sort(T t[], int n) -> void {
+        T *heap = new T[n + 1];
+        std::copy(t, t + n, heap + 1);
+        for (int i = n / 2; i > 0; --i) {
+            heap_sink(heap, n + 1, i);
+        }
+        for (int i = n - 1; i >= 0; --i) {
+            t[i] = heap[1];
+            heap[1] = heap[i + 1];
+            heap_sink(heap, i + 1);
+        }
     }
 
 

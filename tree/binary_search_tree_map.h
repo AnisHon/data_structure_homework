@@ -58,9 +58,9 @@ private:
     auto erase_(Node *root, K k) -> Node * {
         if (root == nullptr) return nullptr;
         if (root->element.key > k) {
-            root = erase_(root->left, k);
+            root->left = erase_(root->left, k);
         } else if (root->element.key < k) {
-            root = erase_(root->right, k);
+            root->right = erase_(root->right, k);
         } else {
             root = maintain(root);
         }
@@ -110,6 +110,10 @@ public:
 
     ~BinarySearchTreeMap() {
         lrd(root_, [] (Node *node) {delete node;});
+    }
+
+    auto get_depth() -> int {
+        return ::get_depth(root_);
     }
 
 };

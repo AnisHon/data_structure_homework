@@ -57,7 +57,7 @@ namespace basic_algorithm {
     
 //    int calculate(string &expression) {
 //        string suffix_expression;
-//        suffix_expression.reserve(expression.size());
+//        suffix_expression.reserve(expression.size_());
 //        std::stack<int> result;
 //        std::stack<Symbol> symbol;
 //        for (const auto &item: expression) {

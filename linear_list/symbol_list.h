@@ -15,7 +15,7 @@ class SymbolList {
         V value;
         Node(K k, V v) : key(k), value(v) {}
 
-//        friend auto operator<<(std::ostream &os, Node &node) -> std::ostream &{
+//        friend auto operator<<(std::ostream &os, Element &node) -> std::ostream &{
 //            os << '[' << node.key << ',' << node.value << ']';
 //            return os;
 //        }
