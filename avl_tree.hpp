@@ -128,7 +128,7 @@ private:
 
     /**
      * balance a tree if needed
-     * @param treeNode[in] check and balance the tree
+     * @param treeNode[in] checkOver and balance the tree
      * @return new or origin root
      */
     static auto balance(TreeNode *treeNode) -> TreeNode * {

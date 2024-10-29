@@ -89,11 +89,11 @@ class BRTree: public BinaryTree<T> {
         }
     }
 
-    auto left_node(Node *root) -> Node * {
+    auto static left_node(Node *root) -> Node * {
         return root == nullptr ? nullptr : root->left;
     }
 
-    auto right_node(Node *root) -> Node * {
+    auto  static  right_node(Node *root) -> Node * {
         return root == nullptr ? nullptr : root->right;
     }
 

@@ -77,6 +77,7 @@ public:
 
     virtual auto size() -> int = 0;
 
+
 };
 
 

@@ -58,7 +58,7 @@ public:
     }
 
     auto empty() -> bool {
-        return heap_.size() <= 0;
+        return heap_.size() < 0;
     }
 
 

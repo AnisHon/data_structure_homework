@@ -1,60 +1,185 @@
-#include <iostream>
-#include "sort_algorithm.h"
-#include <random>
-#include <algorithm>
+#include "stack.h"
 #include "max_priority_queue.h"
-#include "br_tree.h"
-#include <queue>
-using namespace std;
+#include <iostream>
+
+using std::cout, std::cin;
+
+template <class T>
+class Queue {
+
+public:
+    explicit Queue(int size): arrays(new T[size + 1]) , size(size + 1), beg(0), end(0){}
+
+private:
+    int index(int i) const {
+        return i % size;
+    }
+
+    void checkOver() {
+        if (index(end + 1) == beg) {
+            throw std::runtime_error("overflow");
+        }
+    }
+
+    void checkUnder() const {
+        if (empty()) {
+            throw std::runtime_error("underflow");
+        }
+    }
+
+public:
+    void push_back(const T &t) {
+        checkOver();
+        arrays[end] = t;
+        end = index(end + 1);
+    }
+
+    const T& front() {
+        return arrays[beg];
+    }
+
+    bool empty() const {
+        return beg == end;
+    }
+
+    T pop() {
+        checkUnder();
+
+        const auto &element = arrays[beg];
+        beg = index(beg + 1);
+        return element;
+    }
+
+    ~Queue() {
+        delete[] arrays;
+    }
+
+private:
+    T *arrays;
+    int size;
+    int beg;
+    int end;
+};
+
+
+void cast() {
+
+    Stack<int> stack;
+
+    int base, num;
+
+    cin >> num >> base;
 
 
 
+    if (base < 2) {
+        throw std::runtime_error("错误进制");
+    }
+    if (num == 0) {
+        cout << 0;
+        return;
+    }
+
+    while (num) {
+        stack.push(num % base);
+        num /= base;
+    }
+
+    while (stack.empty()) {
+        cout << static_cast<char>(stack.top() > 10 ? (stack.pop() - 10 + 'A') : stack.pop() + '0');
+    }
+    cout << "\n";
+}
+
+void priority() {
+    MaxPriorityQueue<char> queue;
+
+    std::string str;
+    std::cin >> str;
+
+//     O(nlogn)
+    for (const auto &item: str) {
+        queue.push_back(item);
+    }
+
+    while (!queue.empty()) {
+        cout << queue.pop();
+    }
+    cout << "\n";
+
+
+
+
+
+}
+
+void plain() {
+    std::string str;
+    std::cin >> str;
+
+//    O(n)
+    Queue<char> queueS(255);
+    Queue<char> queueH(255);
+
+    for (const auto &item: str) {
+        if (item == 'S') {
+            queueS.push_back(item);
+        } else {
+            queueH.push_back(item);
+        }
+    }
+
+    while (!queueS.empty()) {
+        cout << queueS.pop();
+    }
+    while (!queueH.empty()) {
+        cout << queueH.pop();
+    }
+    cout << '\n';
+}
+
+void foolish() {
+    std::string str;
+    std::cin >> str;
+
+    //    O(n)
+    Queue<char> queue(255);
+
+    for (const auto &item: str) {
+        queue.push_back(item);
+    }
+
+    int countS = 0;
+    int countH = 0;
+
+    while (!queue.empty()) {
+        if (queue.pop() == 'S') {
+            countS++;
+        } else {
+            countH++;
+        }
+    }
+
+    for (int i = 0; i < countS; ++i) {
+        cout << "S";
+    }
+    for (int i = 0; i < countH; ++i) {
+        cout << "H";
+    }
+    cout << '\n';
+}
 
 int main() {
-
-    int array[] = {21, 8, 15, 3, 17, 10, 4, 12, 7, 19, 1, 13, 6, 18, 2, 14, 5, 11, 9};
-
-
-    //sort::heap_sort(array, sizeof array / sizeof(int));
-
-    MaxPriorityQueue<int> p;
+//    cast();
 
 
-    BRTree<int> b;
 
-    for (const auto &item: array) {
-        //cout << item << " ";
-        b.put(item);
-    }
-//    while (!p.empty()) {
-//        cout << p.pop() << " ";
-//    }
+    priority();
+    plain();
+    foolish();
 
-    b.lot_print();
-    cout << endl;
-    b.erase(1);
-    b.lot_print();
-    cout << endl;
-    b.erase(2);
-    b.lot_print();
-    cout << endl;
-    b.erase(8);
-    b.erase(9);
-    b.lot_print();
-    cout << endl;
-    b.erase(7);
-    b.lot_print();
-    cout << endl;
 
-    b.erase(6);
-    b.lot_print();
-    cout << endl;
-    b.erase(21);
-    b.lot_print();
-    cout << endl;
-    b.erase(19);
-    b.lot_print();
-    cout << endl;
 
     return 0;
 }
+
