@@ -10,6 +10,7 @@
 #include <iostream>
 template<typename T>
 class Heap {
+public:
     T *array_;
     int size_;
     int capacity_;

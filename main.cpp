@@ -1,183 +1,188 @@
-#include "stack.h"
-#include "max_priority_queue.h"
+#include <homework/exp3/tree.h>
 #include <iostream>
+#include <stack>
+#include <vector>
 
-using std::cout, std::cin;
-
-template <class T>
-class Queue {
-
-public:
-    explicit Queue(int size): arrays(new T[size + 1]) , size(size + 1), beg(0), end(0){}
-
-private:
-    int index(int i) const {
-        return i % size;
-    }
-
-    void checkOver() {
-        if (index(end + 1) == beg) {
-            throw std::runtime_error("overflow");
-        }
-    }
-
-    void checkUnder() const {
-        if (empty()) {
-            throw std::runtime_error("underflow");
-        }
-    }
-
-public:
-    void push_back(const T &t) {
-        checkOver();
-        arrays[end] = t;
-        end = index(end + 1);
-    }
-
-    const T& front() {
-        return arrays[beg];
-    }
-
-    bool empty() const {
-        return beg == end;
-    }
-
-    T pop() {
-        checkUnder();
-
-        const auto &element = arrays[beg];
-        beg = index(beg + 1);
-        return element;
-    }
-
-    ~Queue() {
-        delete[] arrays;
-    }
-
-private:
-    T *arrays;
-    int size;
-    int beg;
-    int end;
-};
-
-
-void cast() {
-
-    Stack<int> stack;
-
-    int base, num;
-
-    cin >> num >> base;
-
-
-
-    if (base < 2) {
-        throw std::runtime_error("错误进制");
-    }
-    if (num == 0) {
-        cout << 0;
+void dlr(const BinaryTreeNode<char> *node) {
+    if (!node || node->isNull()) {
         return;
     }
 
-    while (num) {
-        stack.push(num % base);
-        num /= base;
-    }
+    std::cout << node->getData() << " ";
+    dlr(node->getLeft());
 
-    while (stack.empty()) {
-        cout << static_cast<char>(stack.top() > 10 ? (stack.pop() - 10 + 'A') : stack.pop() + '0');
-    }
-    cout << "\n";
+    dlr(node->getRight());
+
+
 }
 
-void priority() {
-    MaxPriorityQueue<char> queue;
-
-    std::string str;
-    std::cin >> str;
-
-//     O(nlogn)
-    for (const auto &item: str) {
-        queue.push_back(item);
-    }
-
-    while (!queue.empty()) {
-        cout << queue.pop();
-    }
-    cout << "\n";
-
-
+void lrd(BinaryTreeNode<char> *node) {
+    std::stack<const BinaryTreeNode<char> *> stack;
+    stack.push(node);
 
 
 
 }
 
-void plain() {
-    std::string str;
-    std::cin >> str;
+void ldr(BinaryTreeNode<char> *node) {
 
-//    O(n)
-    Queue<char> queueS(255);
-    Queue<char> queueH(255);
+    std::stack<const BinaryTreeNode<char> *> stack;
+    stack.push(node);
 
-    for (const auto &item: str) {
-        if (item == 'S') {
-            queueS.push_back(item);
-        } else {
-            queueH.push_back(item);
+    while (!stack.empty()) {
+        auto &curr = stack.top();
+
+        // null leaf
+        if (curr->isNull()) {
+            stack.pop();
+            continue;
         }
-    }
 
-    while (!queueS.empty()) {
-        cout << queueS.pop();
-    }
-    while (!queueH.empty()) {
-        cout << queueH.pop();
-    }
-    cout << '\n';
-}
-
-void foolish() {
-    std::string str;
-    std::cin >> str;
-
-    //    O(n)
-    Queue<char> queue(255);
-
-    for (const auto &item: str) {
-        queue.push_back(item);
-    }
-
-    int countS = 0;
-    int countH = 0;
-
-    while (!queue.empty()) {
-        if (queue.pop() == 'S') {
-            countS++;
+        // L子树访问完毕
+        if (curr->isFlag()) {
+            stack.pop();
+            curr->setFlag(false);
+            std::cout << curr->getData() << " ";
+            stack.push(curr->getRight());
         } else {
-            countH++;
+            stack.push(curr->getLeft());
+            curr->setFlag(true);
         }
+
+
     }
 
-    for (int i = 0; i < countS; ++i) {
-        cout << "S";
-    }
-    for (int i = 0; i < countH; ++i) {
-        cout << "H";
-    }
-    cout << '\n';
+
+
+
+
 }
+
+BinaryTreeNode<char> *setNode(int incident, BinaryTreeNode<char> *node, const std::string &info, bool is_print = true) {
+
+    char  c;
+    if (is_print) {
+        for (int i = 0; i < incident; ++i) {
+            std::cout << "--";
+        }
+        std::cout << node->getData() << "->" << info;
+    }
+
+    std::cin >> c;
+    if (c == '#') {
+        return &(new BinaryTreeNode<char>())->setNull(true);
+    }
+    return &(new BinaryTreeNode<char>())->setData(c).setNull(false);
+}
+
+int build_tree() {
+    std::stack<BinaryTreeNode<char> *> stack;
+
+    char c;
+    std::cin >> c;
+
+    BinaryTreeNode<char> root;
+    root.setData(c);
+
+    stack.push(&root);
+
+
+    int incident = 0;
+    while (!stack.empty()) {
+        auto curr = stack.top();
+        if (curr->isNull()) {
+            incident--;
+            stack.pop();
+            continue;
+        }
+
+
+
+        if (!curr->getLeft()) {
+            auto temp = setNode(incident, curr,  "L:");
+
+            curr->setLeft(temp);
+            stack.push(temp);
+            incident++;
+
+        } else if (!curr->getRight()) {
+            auto temp = setNode(incident, curr, "R:");
+            curr->setRight(temp);
+            stack.push(temp);
+            incident++;
+        } else {
+            incident--;
+            stack.pop();
+        }
+
+
+    }
+
+    dlr(&root);
+
+
+}
+
+int dlr_build() {
+    std::stack<BinaryTreeNode<char> *> stack;
+
+    char c;
+    std::cin >> c;
+
+    BinaryTreeNode<char> root;
+    root.setData(c);
+
+    stack.push(&root);
+
+
+    int incident = 0;
+    while (!stack.empty()) {
+        auto curr = stack.top();
+        if (curr->isNull()) {
+            incident--;
+            stack.pop();
+            continue;
+        }
+
+
+
+        if (!curr->getLeft()) {
+            auto temp = setNode(incident, curr,  "L:", false);
+
+            curr->setLeft(temp);
+            stack.push(temp);
+            incident++;
+
+        } else if (!curr->getRight()) {
+            auto temp = setNode(incident, curr, "R:", false);
+            curr->setRight(temp);
+            stack.push(temp);
+            incident++;
+        } else {
+            incident--;
+            stack.pop();
+        }
+
+
+    }
+    dlr(&root);
+//    abc#d##e##f##
+
+    std::cout << "\n";
+
+    ldr(&root);
+
+
+
+
+
+}
+
 
 int main() {
-//    cast();
 
-
-
-    priority();
-    plain();
-    foolish();
-
+    dlr_build();
+//    build_tree();
 
 
     return 0;

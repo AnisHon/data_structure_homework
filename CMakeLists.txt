@@ -26,6 +26,7 @@ set(link_dir
         linear_list/forward_list.h
         linear_list/symbol_list.h
         linear_list/order_symbol_list.h
+        homework/exp3/tree.h
 )
 
 add_executable(CPPproject01 main.cpp
