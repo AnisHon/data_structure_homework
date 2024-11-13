@@ -207,7 +207,11 @@ void dlr_build() {
             incident++;
 
         } else if (!curr->getRight()) {
+            if (curr->getData() == 'g') {
+                int i = 1;
+            }
             auto temp = setNode(incident, curr, "R:", false);
+
             curr->setRight(temp);
             stack.push(temp);
             incident++;
@@ -258,6 +262,30 @@ int main() {
      *           d
      */
 
+    /*
+    *              a
+    *            /   \
+    *           f     b
+    *                / \
+    *               c   e
+    *                \
+    *                 d
+     *
+    */
+
+
+    /*
+       *              a
+       *            /   \
+       *           f     b
+       *          / \   / \
+       *         c   h g   e
+       *          \
+       *           d
+        *
+       */
+    // af##bc#d##e##
+    // afc#d##h##bg##e##
     return 0;
 }
 
